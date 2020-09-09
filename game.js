@@ -1,4 +1,5 @@
 const board = document.querySelector("#board");
+const newGameBtn = document.querySelector("#newGameBtn");
 const HEIGHT = 6;
 const WIDTH = 7;
 const EMPTY_COLOR = "#353535";
@@ -6,7 +7,9 @@ const PLAYER_ONE_COLOR = "rgb(211, 198, 21)";
 const PLAYER_TWO_COLOR = "rgb(107, 23, 23)";
 const HIGHLIGHT_COLOR = "rgb(89, 154, 230)";
 let gameEnded = true; //status of the game
+let gamePlayed = false;
 let gameBoard;
+let winner;
 let current_player_color = PLAYER_ONE_COLOR;
 let current_player_number = 1;
 let cells = document.querySelectorAll(".cell");
@@ -21,6 +24,7 @@ columns.forEach(function (item, idx) {
 });
 
 function createGrid(){
+    if(!gamePlayed) gamePlayed = true;
     //creating a 2d array full of 0's / clearing current board for a new game
     gameBoard = Array(WIDTH).fill(0).map(x => Array(HEIGHT).fill(0));
     //clearing the board visually
@@ -45,15 +49,17 @@ function dropDisc(column){
                 board.children[column-1].children[HEIGHT-1].children[0].style.background=current_player_color;
                 checkWin((column-1), (HEIGHT-1));
                 changePlayer();
+                changeIndicator();
             }else{
                 for(i = 0; i < HEIGHT; i++){
                     //if the cell isn't empty put a disc in a cell above
                     if(gameBoard[column-1][i]){
                         gameBoard[column-1][i-1] = current_player_number;
-                        // console.log("disc dropped in (" + column + ", " + i + ")");
+                        //change the background of a circle
                         board.children[column-1].children[i-1].children[0].style.background=current_player_color;
                         checkWin((column-1), (i-1));
                         changePlayer();
+                        changeIndicator();
                         break;
                     }
                 }
@@ -77,7 +83,7 @@ function dropDisc(column){
 function checkWin(x, y){
     let checkString = "";
 
-    console.log(`--------- checking for: ${x}, ${y}`);
+    // console.log(`--------- checking for: ${x}, ${y}`);
     //vertical
     for(i = -3; i <= 3; i++){
         if((y + i) < HEIGHT && (y + i) >= 0){
@@ -149,6 +155,7 @@ function checkWin(x, y){
 
 function resetGame(){
     gameEnded = false;
+    changeIndicator();
     cells.forEach((cell) => {
         cell.classList.remove('cell-winning');
     });
@@ -156,16 +163,21 @@ function resetGame(){
         column.classList.add('column-active');
     });
     board.classList.add('board-active');
+    newGameBtn.classList.add('button-disabled');
+    newGameBtn.setAttribute("disabled", "");
     createGrid();
 }
 
 function endGame(player, x, y, direction){
+    winner = player;
     console.log(`Player ${player} won!`);
     gameEnded = true;
     columns.forEach((column) => {
         column.classList.remove('column-active');
     });
     board.classList.remove('board-active');
+    newGameBtn.classList.remove('button-disabled');
+    newGameBtn.removeAttribute("disabled");
     highlightWinner(player, x, y, direction);
 }
 
@@ -266,3 +278,5 @@ function highlightWinner(player, x, y, direction){
         disc.classList.add('cell-winning');
     });
 }
+
+newGameBtn.addEventListener('click', resetGame);
