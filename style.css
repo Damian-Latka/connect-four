@@ -28,19 +28,39 @@ main{
 .board{
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    max-width: 680px;
+    max-width: 900px;
+    border-radius: 5% 5% 1% 1%;
     width: 95%;
+    background: rgb(88, 102, 119);
+    transition: background .3s;
+}
+
+.board-active{
     background: rgb(89, 154, 230);
+    transition: background .3s;
 }
 
 .column{
     display: grid;
+    background: transparent;
     grid-template-rows: repeat(6, 1fr);
+    transition: background .25s;
 }
 
-.column:hover{
-    background: rgb(67, 121, 182);
-    border: 1px solid rgb(20, 57, 100);
+.column-active:hover{
+    /* background: rgb(67, 121, 182); */
+    background: rgba(0, 0, 0, 0.25);
+    /* border: 1px solid rgb(20, 57, 100); */
+    transition: background .25s;
+}
+
+.column:first-child{
+    border-top-left-radius: 35% 5%;
+    border-bottom-left-radius: 8% 1%;
+}
+.column:last-child{
+    border-top-right-radius: 35% 5%;
+    border-bottom-right-radius: 8% 1%;
 }
 
 .cell{
@@ -52,6 +72,16 @@ main{
     padding: 5% 0;
     margin: 1%;
     border-radius: 50%;
+}
+
+.cell-winning{
+    animation: highlight 1s infinite;
+}
+
+@keyframes highlight{
+    0% {background: rgba(119, 253, 119, 0);}
+    50% {background: rgba(119, 253, 119, 1);}
+    100% {background: rgba(119, 253, 119, 0);}
 }
 
 .circle{

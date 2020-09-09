@@ -4,7 +4,7 @@ const WIDTH = 7;
 const EMPTY_COLOR = "#353535";
 const PLAYER_ONE_COLOR = "rgb(211, 198, 21)";
 const PLAYER_TWO_COLOR = "rgb(107, 23, 23)";
-const HIGHLIGHT_COLOR = "rgb(232, 0, 215)";
+const HIGHLIGHT_COLOR = "rgb(89, 154, 230)";
 let gameEnded = true; //status of the game
 let gameBoard;
 let current_player_color = PLAYER_ONE_COLOR;
@@ -150,14 +150,22 @@ function checkWin(x, y){
 function resetGame(){
     gameEnded = false;
     cells.forEach((cell) => {
-        cell.style.background = "transparent";
+        cell.classList.remove('cell-winning');
     });
+    columns.forEach((column) => {
+        column.classList.add('column-active');
+    });
+    board.classList.add('board-active');
     createGrid();
 }
 
 function endGame(player, x, y, direction){
     console.log(`Player ${player} won!`);
     gameEnded = true;
+    columns.forEach((column) => {
+        column.classList.remove('column-active');
+    });
+    board.classList.remove('board-active');
     highlightWinner(player, x, y, direction);
 }
 
@@ -254,6 +262,7 @@ function highlightWinner(player, x, y, direction){
 
     //change the background of cells with winning discs
     winningDiscs.forEach((disc) =>{
-        disc.style.background = HIGHLIGHT_COLOR;
+        // disc.style.background = HIGHLIGHT_COLOR;
+        disc.classList.add('cell-winning');
     });
 }
