@@ -13,7 +13,6 @@ body{
 
 /* header */
 header{
-    /* border: 1px solid red; */
     font-size: 1.5rem;
     text-align: center;
 }
@@ -26,7 +25,7 @@ header{
 
 /* main */
 main{
-    /* border: 1px solid purple; */
+
 }
 
 .game{
@@ -34,7 +33,7 @@ main{
     flex-direction: column;
     align-items: center;
     margin-top: 1em;
-    margin-bottom: 2.5em;
+    padding-bottom: 2em;
 }
 
 .board{
@@ -111,7 +110,7 @@ main{
     font-size: 1.5rem;
     padding: .2em 0;
 
-    transition: background .5s;
+    transition: background .5s, color .5s;
 }
 
 .button:hover{
@@ -121,7 +120,8 @@ main{
 
 .button-disabled{
     background: rgb(54, 65, 78);
-    transition: background .5s;
+    color: transparent;
+    transition: background .5s, color .5s;
 }
 
 .button-disabled:hover{
@@ -149,9 +149,7 @@ main{
 }
 /* footer */
 footer{
-    /* border: 1px solid yellow; */
     background: rgba(0, 0, 0, 0.25);
-    /* padding-top: .2em; */
     position: absolute;
     bottom: 0;
     width: 100%;
